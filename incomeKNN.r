@@ -158,8 +158,8 @@ computeAUC = function(curve) {
 #       FP  TN
 computeConfusionMatrix = function(labels, confidences, threshold){
   confusion_matrix = matrix(data = c(0,0,0,0), nrow = 2, ncol = 2)
-  for(i in 1:nrow(confidences)){
-    if(confidence <= threshold)
+  for(i in 1:length(confidences)){
+    if(confidences[i] <= threshold)
       pred_label = 1
     else
       pred_label = 2
