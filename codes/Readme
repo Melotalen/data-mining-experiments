@@ -1,0 +1,12 @@
+> source('irisAnalysis.r')
+> source('incomeAnalysis.r')
+
+Make sure the data is present in the working directory.
+
+====================
+Description of files
+====================
+irisKNN.r - Contains all the functions requried for KNN classification
+irisAnalysis.r - Contains the script for importing the files and calling the relevant functions from KNN.
+incomeKNN.r - Contains all the functions required for KNN classification of the Income Dataset
+incomeAnalysis.r - Script for importing and runnning the KNN Classifier

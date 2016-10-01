@@ -1,39 +1,4 @@
-norm_vec <- function(x) sqrt(sum(x^2))
 
-recodeIncomeData = function(data, data2){
-  attr.nominal = c("workclass", "marital_status", "occupation", "relationship", "race", "gender", "native_country")
-  data.nominal = data[,attr.nominal]
-  data2.nominal = data2[,attr.nominal]
-  attr.other = c("age", "capital_gain", "capital_loss", "hour_per_week", "education_cat")
-  data2.other = data2[,attr.other]
-  headings = c()
-  for(i in 1:length(attr.nominal)){
-    lvls = levels(data.nominal[,attr.nominal[i]])
-    for(j in 1:length(lvls)){
-      tag = paste(attr.nominal[i], lvls[j])
-      headings = c(headings, tag)
-    }
-  }
-  recoded.nominal = data.frame(matrix(nrow = nrow(data2.nominal), ncol = length(headings)))
-  for(i in 1:nrow(recoded.nominal))
-    for(j in 1:ncol(recoded.nominal))
-      recoded.nominal[i,j] = 0
-  names(recoded.nominal) = headings
-  for(i in 1:nrow(recoded.nominal)){
-    record = as.matrix(data2.nominal[i,])
-    for(j in 1:ncol(record)){
-      tag = paste(attr.nominal[j], record[j])
-      if( tag %in% colnames(recoded.nominal))
-        recoded.nominal[i,tag] = 1
-    }
-  }
-  # for(i in 1:nrow(recoded.nominal))
-  #   for(j in 1:ncol(recoded.nominal))
-  #     if(is.na(recoded.nominal[i,j]))
-  #       recoded.nominal[i,j] = 0
-  return(data.frame(data2.other,recoded.nominal))
-  
-}
 incomeScale = function(source_data, data) {
   attr.nominal = c("workclass", "marital_status", "occupation", "relationship", "race", "gender", "native_country")
   attr.numeric = c("age", "capital_gain", "capital_loss", "hour_per_week")
@@ -78,13 +43,13 @@ incomeScale = function(source_data, data) {
   return(output)
 }
 
-getIncomePrediction = function(distances, labels, k){
-  classWeight = c(0,0)
+getIncomePrediction = function(labels){
+  classCount = c(0,0)
+  k = length(labels)
   for(i in 1:k){
-    classWeight[labels[i]] = classWeight[labels[i]] + 1/distances[i]
+    classCount[labels[i]] = classCount[labels[i]] + (k+1-i)
   }
-  classWeight[2] = 3.27*classWeight[2]
-  return(classWeight[2]/sum(classWeight))
+  return(classCount[2]/sum(classCount))
 }
 
 generateIncomeModel = function(train_data, train_labels, test_data){
@@ -101,7 +66,7 @@ generateIncomeModel = function(train_data, train_labels, test_data){
   test_data.numeric = test_data[,attr.numeric]
   test_data.ordinal = data.frame(test_data[,attr.ordinal])
   #Creating output dataframe
-  output = array(dim = c(nrow(test_data), 2, nrow(train_data))) #test x 2 x train
+  output = matrix(nrow = nrow(test_data), ncol = nrow(train_data))
   #Function for computing nominal dissimilarity
   nominalDissimilarity = function(val1, val2){
     distance = 0
@@ -129,70 +94,17 @@ generateIncomeModel = function(train_data, train_labels, test_data){
     }
     distances.total = (n_nominal*distances.nominal + n_numeric*distances.numeric + n_ordinal*distances.ordinal)/(n_total)
     distances.total.sorted = sort(distances.total, index.return = TRUE)
-    distances.total.sorted$ix = train_labels[distances.total.sorted$ix]
-    output[i,1,] = distances.total.sorted$x #Distances soreted in increaing order
-    output[i,2,] = distances.total.sorted$ix #Labels sorted by distances
+    output[i,] = train_labels[distances.total.sorted$ix]
   }
   return(output)
 }
 
-generateIncomeModelCosine = function(train_data, train_labels, test_data){
-  #Creating Datasets Income_original.csv
-  attr.nominal = c("workclass", "marital_status", "occupation", "relationship", "race", "gender", "native_country")
-  attr.numeric = c("age", "capital_gain", "capital_loss", "hour_per_week")
-  attr.ordinal = c("education_cat")
-  for(i in 1:ncol(test_data))
-    levels(test_data[,i]) = levels(train_data[,i])
-  train_data.nominal = train_data[,attr.nominal]
-  train_data.numeric = train_data[,attr.numeric]
-  train_data.ordinal = data.frame(train_data[,attr.ordinal])
-  test_data.nominal = test_data[, attr.nominal]
-  test_data.numeric = test_data[,attr.numeric]
-  test_data.ordinal = data.frame(test_data[,attr.ordinal])
-  #Creating output dataframe
-  output = array(dim = c(nrow(test_data), 2, nrow(train_data))) #test x 2 x train
-  #Function for computing nominal dissimilarity
-  nominalDissimilarity = function(val1, val2){
-    distance = 0
-    for(i in 1:length(val1)){
-      if(val1[i] != val2[i])
-        distance = distance + 1
-    }
-    return(distance)
-  }
-  
-  #Actual COmputation begins here
-  n_nominal = ncol(test_data.nominal)
-  n_numeric = ncol(test_data.numeric)
-  n_ordinal = ncol(test_data.ordinal)
-  n_total = n_nominal + n_numeric + n_ordinal
-  for(i in 1:nrow(test_data)){
-    print(paste("test element:",i))
-    distances.nominal = vector(mode = "numeric", length = nrow(train_data))
-    distances.numeric = vector(mode = "numeric", length = nrow(train_data))
-    distances.ordinal = vector(mode = "numeric", length = nrow(train_data))
-    for(j in 1:nrow(train_data)){
-      distances.nominal[j] = nominalDissimilarity(train_data.nominal[j,], test_data.nominal[i,])
-      cosinediss = sum(train_data.numeric[j,]*test_data.numeric[i,])/norm_vec(train_data.numeric[j,])/norm_vec(test_data.numeric[i,])
-      if(cosinediss > 1) cosinediss = 1
-      if(cosinediss < -1) cosinediss = -1
-      distances.numeric[j] = acos(cosinediss)
-      distances.ordinal[j] = sqrt(sum((train_data.ordinal[j,] - test_data.ordinal[i,])^2))
-    }
-    distances.total = (n_nominal*distances.nominal + n_numeric*distances.numeric + n_ordinal*distances.ordinal)/(n_total)
-    distances.total.sorted = sort(distances.total, index.return = TRUE)
-    distances.total.sorted$ix = train_labels[distances.total.sorted$ix]
-    output[i,1,] = distances.total.sorted$x #Distances soreted in increaing order
-    output[i,2,] = distances.total.sorted$ix #Labels sorted by distances
-  }
-  return(output)
-}
 incomeKnn = function(k, model, test_labels){
-  output = data.frame(matrix(nrow = length(test_labels), ncol = 2))  
+  output = data.frame(matrix(nrow = nrow(model), ncol = 2))  
   names(output) = c("Actual_Label", "Confidence")
-  for(i in 1:length(test_labels)){
+  for(i in 1:nrow(model)){
     output[i,1] = test_labels[i]
-    output[i,2] = getIncomePrediction(model[i,1,1:k],model[i,2,1:k],k)
+    output[i,2] = getIncomePrediction(model[i,1:k])
   }
   return(output)
 }

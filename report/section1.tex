@@ -1,174 +1,52 @@
-The Income dataset is extracted from 1994 US Census database. The data base contains 520 records. Each record in the database represents a person. The records hold a number of personal details about the people such as Marital Status, Occupation, Education Level, etc. All the attributes are described in full length in Table \ref{table:database-description}. The records are classified into two sets -``people with income greater than \$50K" and "people with income less than or equal to \$50K". The ``$<=$50K" class contains 420 records while the ``$>$50K" class has the remaining 100. The exploratory analysis was concerned with answering two main questions - 
+The main goal of this assignment was to understand the behavior of the kNN classfier using metrics from ROC curves, confusion matrix, etc.
+The kNN classifier was applied to the two datasets - Iris and Income. More detailed analysis was done for Income Dataset.
+\subsection{Datasets}
 \begin{itemize}
-\item There are 16 attributes for each person. What are the characteristics of each attribute ? Both qualitative and statistical ? What values are missing ? 
-\item The records are classified into either of the two categories ``$>$50K" and ``$<=$50K". What are the attributes that best determine the classification category and what are attributes that don't seem to have any effect?
+\item \textbf{Iris Dataset} - The Iris Dataset has four attributes. Each attribute is numeric. It has 150 records, distributed equally among 3 classes - \emph{Setosa, Versicolor and Virginia}.
+\item \textbf{Income Dataset} - The Income Dataset has 15 attributes, which are a mix of nominal, numeric and ordinal data. There are a total of 520 records in the training set and 288 in the test set. There are only two classes. The ratio between the classes is approximately $1:3$ with the negative class being larger in number.
 \end{itemize}
+\subsection{Details of KNN Algorithm}
+To classify the test records, the KNN algorithm was used. A number of variations were tried in each of the algorithms. This section explains each of the variations and discusses the pros and cons of each.
+\subsubsection{Variation in Preprocessing}
+ \begin{itemize}
+ 	\item \textbf{Simple Scaling} - The nominal attributes are not touched. Numeric and ordinal attributes are scaled and centered. The resultant standard deviation was 1 and mean was 0.
+ 	\item \text{Simple Scaling with Binning} - Apart from scaling and centering the numeric and ordinal attributes the nominal attriutes were also modified. Many of the nominal attributes were very skewed. For e.g - In \emph{Native Country} in Income dataset, out of 26 categories, 12 categories had only one record each. In such cases the smalled categories were grouped together. Also \emph{Education_cat} was converted to nominal type by grouping a few educational levels what had very few records.
+ \end{itemize}
+ \subsubsection{Variations in Proximity Metric}
+ \begin{itemize}
+ 	\item \textbf{Euclidean Distance-Simple Dissimilarity} - For numeric attributes euclidean distances were computed, while for nominal attributes simple dissimilarity was computed. These were combined by taking a weighted average.
+ 	\item \textbf{Cosine Similarity-Simple Dissimilarity} - Nominal atributes were treated the same way as the previous type. But for numeric attributes the cosine similarity was computed. Finally, they were combined in the same way as the previous method i.e by taking a weighted average.
+ \end{itemize}
+\subsubsection{Algorithm for Voting}
+ 	 	Let $N$ represent the set of $k$ nearest neighbors. Let $N^(1)\subseteq N$ be set of neighbors belonging to class 1 and $N^(2)$ be the set of neighbors belonging to the other class.
+\textbf{Inverse Distance Weighted Voting}: Once the $k$ nearest neighbours have been determined, the probablity of a point belonging to a class is as follows - 
+\begin{equation*}
+	P(class = i) = \frac{\sum_{r \in N^(i)} \frac{1}{distance(r)}}{\sum_{r \in N} \frac{1}{distance(r)}}
+\end{equation*}
+Finally, the class was assigned based on a threhold that can be set to get the target tru positive rate or false psoitive rate.
 
-Table: II tabulates the occurrence of missing values in the database.
+To predict the class of each of the test records the two functions were used. The first one was \texttt{computeDistances(train\_data, test\_data)} and the second one was \texttt{predictLabel(k, distances)}. 
+\begin{algorithm}
+	\begin{algorithmic}
+	\For{i in test\_data }
+		\For{j in train\_data}
+			\State distance[i,j] $\gets$ computeDistance(r,s)
+		\EndFor
+		distances[i,j] $\gets$ sort(distance[i,], order = increasing)
+		predictLabel(k, distances[i, 1:k]	
+	\EndFor	
+	\end{algorithmic}
+\end{algorithm}
+To classfiy a new records the \texttt{predictLabel(k, distances)}
 
-\begin{table}[h]
-\label{table:database-description}
-\caption{Description of the Data Attributes}
-\centering
-	\begin{tabular}{| c | m{140 pt} |}
-		\hline
-		Attribute Name & Description\\
-		\hline
-		ID & Unique identifier of each record. Takes integer values and ranges from 15 to 32378.\\
-		\hline
-		age & Age of the person in years. It ranges from 15 to 82.\\
-		\hline
-		workclass & Type of employer. It has 5 categories - Federal-gov, Private, Self-emp-inc, Self-emp-not-inc and State-gov. \\
-		\hline
-		fnlwgt & No description available. \\
-		\hline
-		\hline
-		education & Education level of the person. It is divided into 16 levels - Preschool, 1st-4th, 5th-6th, 7th-8th, 9th, 10th, 11th, 12th, HS-grad, Some-college, Assoc-voc, Assoc-acdm, Bachelors, Masters, Prof-school, Doctorate.\\
-		education\_cat & Each education level is assigned a numerical value. It starts at $1$ for Preschool and goes upto $16$ for a Doctorate.\\
-		\hline
-		marital\_status & It takes six different Divorced, Married-AF-spouse, Married-spouse-absent, Never-married, Separated and Widowed.\\
-		\hline
-		occupation & It has 13 levels - Adm-clerical, Craft-repair, Exec-managerial, Farming-fishing, Handlers-cleaners, Machine-op-inspct, Other-service, Priv-house-serv, Prof-specialty, Protective-serv, Sales, Tech-support and Transport-moving. It also has missing values labeled as ``?".\\
-		\hline
-		relationship & It is unknown as to which relationship does this refer to. It takes six possible values - Husband, Not-in-family, Other-relative, Own-child, Unmarried and Wife.\\
-		\hline
-		race & It takes four possible values Amer-Indian-Eskimo, Asian-Pac-Islander, Black, Other and White. \\
-		\hline
-		gender & It is either Male or Female.\\
-		\hline
-		capital\_gain & It takes a continuous value from 0 to 99999. $91\%$ of the persons have a 0 in this field.\\
-		\hline
-		capital\_loss & It too takes a continuous value from 0 to 4356. $96\%$ of the people also have a 0 in this field. \\
-		\hline
-		hour\_per\_week & It refers to the number of hours a person works in a week. It ranges from 2 hours to 99 hours.\\
-		\hline
-		native\_country & The country of origin. This attribute can take over 25 values. However, 90\% of the times it takes "United States".\\
-		\hline
-		class & There are two classes labeled using strings - ``$<=$50K" and ``$>$50K".\\
-		\hline
-	\end{tabular}
-\end{table}
+The \texttt{computeDistances()} function computes the distance of each of the test record from each of the training data record. The distances are sorted and stored for use by \texttt{predictLabel(k, distances)}. \texttt{predictLabel(k, distances)} takes the number of nearest neighbors (k) as a parameter and predicts the label. The detailed defintions of the functions are given in fig.1 and fig.2. \\
 
-\begin{table}[h]
-\label{table:missing-values}
-\caption{Missing Values in the Dataset}
-\centering
-	\begin{tabular}{| c | c |}
-		\hline
-		Attribute Name & Missing Values/Total number of Records\\
-		\hline
-		ID & $0$\\
-		\hline
-		age & $0$\\
-		\hline
-		workclass & $0.054$ \\
-		\hline
-		fnlwgt & $0$ \\
-		\hline
-		education & $0$\\
-		\hline
-		education\_cat & $0$\\
-		\hline
-		marital\_status & $0$\\
-		\hline
-		occupation & $0.054$ \\
-		\hline
-		relationship & $0$ \\
-		\hline
-		race & $0$ \\
-		\hline
-		gender & $0$ \\
-		\hline
-		capital\_gain & $0$ \\
-		\hline
-		capital\_loss & $0$ \\
-		\hline
-		hour\_per\_week & $0$\\
-		\hline
-		native\_country & $0.12$\\
-		\hline
-		class & $0$ \\
-		\hline
-	\end{tabular}
-\end{table}
+The reason for separating out the distance computation was the predictions were to be made for different values of $k$. Distance computation takes $O(mn\log n)$ time, where m is the number of records in test dataset, n is the number of records in training dataset. While prediction takes only $O(mk)$ time, which is considereably less than $O(mn\log n)$.\\
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Characteristics of Attributes}
-The Income dataset has 16 attributes, out which two don't contribute to the understanding of data. The \emph{ID} attribute is a number unique to each record and hence does not have any useful underlying pattern. The meaning of \emph{fnlwgt} could not be discerned and so it was not analyzed further. The remaining attributes were analyzed and the following peculiarities were found - 
+\subsection{KNN on Income Dataset}
+The Income dataset has 15 attributes. Based on the analysis during the previous assignment the three of the attributes were dropped and the remaining were split into three groups by the data type they contained - Nominal, Ordinal and Numeric.\\
+The data was preprocessed into two differernt ways. The first way was the same as in the previous assignment, however the results were not satisfactory so they were preprocessed again.
+The preprocessing was done as follows
 \begin{itemize}
-	\item \emph{Age (Fig:1)}- The age of the people in the higher income bracket ranged from 25 to 79 years. The majority of the people were in the range of 36 to 52 years. The age in the lower income bracket had a different distribution. It was more spread out. The ages ranged from 17 to 82 years. The majority of the people were relatively younger in this income bracket with the 50\% of the people lying between 25 and 45 years. Although there is a considerable overlap, the peaks of the distributions are distinguishable. The mean of higher income bracket is at 45 while the peak of lower income bracket is at 36.78 years, 10 years less.
-		\begin{figure}[h]
-			\label{fig:age-hist}
-			\caption{Histogram of Age for both the classes}
-			\centering
-			\includegraphics[width=0.5\textwidth]{images/age-hist.jpg}
-		\end{figure}
-	\item \emph{Capital Gain (Fig:2)} - Out of the 420 people in lower income bracket only 3\% made positive capital gains, while nearly 73\% of the 100 in the upper income bracket made capital. Also the capital gains of the upper income bracket are significantly more.
-		\begin{figure}[h]
-			\label{fig:capital-gain-hist}
-			\caption{Histogram of Capital Gains for both the classes}
-			\centering
-			\includegraphics[width=0.5\textwidth]{images/capital_gain-hist.jpg}
-		\end{figure}
-	\item \emph{Capital Losses (Fig:3)} - Most of the people did not make any capital losses. Only 3\% of people in both the classes suffered a capital loss. But since the number of lower income bracket is significantly higher, we can conclude that a person suffering a capital loss has a higher probability of being in the lower income bracket.
-		\begin{figure}[h]
-			\label{fig:capital-loss-hist}
-			\caption{Histogram of Capital Losses for both the classes}
-			\centering
-			\includegraphics[width=0.5\textwidth]{images/capital_loss-hist.jpg}
-		\end{figure}
-	\item \emph{Education (Fig:4)} - All education categories have mix of people from upper and lower income groups. However, certain education levels have a greater proportion of people having income more than \$50K. If a person comes from the following groups - preschool, $5^{th}$ - $6^{th}$, $7^{th} - 8^{th}$, $11^{th}$, $12^{th}$ or Masters then their is a greater than 50\% chance that they belong to the upper income bracket. Also it is interesting to note that 86\% of all the people have a maximum education degree of HS-grad, Some-college or Bachelors.
-		 \begin{figure}[h]
-			\label{fig:education-bar}
-			\caption{Barplot showing the number of people vs education category}
-			\centering
-			\includegraphics[width=0.5\textwidth]{images/education-bar.jpg}
-		\end{figure}
-	\item \emph{Marital Status (Fig:5)} -75\% people in the higher income bracket are married. This is also the single largest marital status in the higher income bracket. The single largest category in the lower income bracket is Never-Married. Nearly 45\% of the people  in lower income bracket have never married.
-		 \begin{figure}[h]
-			\label{fig:marital-status-bar}
-			\caption{Barplot showing the number of people plotted against their Marital Status}
-			\centering
-			\includegraphics[width=0.5\textwidth]{images/marital-status-bar.jpg}
-		\end{figure}
-	\item \emph{Native Country (Fig:6)} - For most of the people in the higher income bracket the country of origin is USA. A large number of people in lower income bracket too belong to USA. This brings the ratio of higher to lower income for USA down to 0.22. This ratio is 1 for three countries - France, Italy and Japan. For 16 out of the 26 countries the ratio is 0.
-		 \begin{figure}[h]
-			\label{fig:native-country}
-			\caption{Ratio of people in '>50K' to total people grouped by Native Country}
-			\centering
-			\includegraphics[width=0.5\textwidth]{images/native-country.jpg}
-		\end{figure}
-	\item \emph{Occupation (Fig:7)} - Occupations requiring professional knowledge or managerial knowledge have most of the upper income people. However, the ratio of upper income people never goes above 0.5 for any occupation. This makes this attribute difficult to be used for any discrimination. The people in other-services and Private house service always belong to the Lower income category.
-		 \begin{figure}[h]
-			\label{fig:occupation-bar}
-			\caption{Ratio of people in Upper Income Bracket grouped by Occupation}
-			\centering
-			\includegraphics[width=0.5\textwidth]{images/occupation-bar.jpg}
-		\end{figure}
-	\item \emph{Hours Per Week (Fig:8)} - Overall most people work for moderate number of hours per week,  i.e - ranging from 25 to 45 hours. In the upper income category almost everyone works in this range. The distrbution for lower income people is a bit more spreadout.
-		 \begin{figure}[h]
-			\label{fig:hour-per-week-hist}
-			\caption{Hours worked per week for both the categories}
-			\centering
-			\includegraphics[width=0.5\textwidth]{images/hours-hist.jpg}
-		\end{figure}
+\item Nominal - 
 \end{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Patterns in Plots}
-A scatter plot (Fig:9)  between the education, hours per week, capital gain and capital loss offers some interesting insights. The people with lower educational qualifications tend to have higher capital gains. Most people with a capital gain tend to be in the higher income category while people with capital loss tend to be in the lower income category. People who have capital gains mostly work moderate number of hours per week. People below High School Grad level of education work for relatively lesser hours per week, as compared to people with college education or higher. The number of working hours of people in between these two, span from the very low to very high.\\
-\begin{figure}[h]
-			\label{fig:scatter-matrix}
-			\caption{Matrix of Scatter Plots}
-			\centering
-			\includegraphics[width=0.5\textwidth]{images/scatter-matrix.jpg}
-\end{figure}
-Certain attributes can be used to discriminate between the classes. In this cursory analysis the two classes tend to separate out a lot when a scatter plot is plotted between Capital Gain education and hours worked per week. This scatter plot shows two distinct clusters of high income category. The first one is made no capital gains has high education and moderate working hours. The other cluster made significant capital gains and hence stands out.\\
- \begin{figure}[h]
-			\label{fig:3d-scatter}
-			\caption{3D Scatter plot of the attributes Capital Gain, Capital Loss and Hours Worked with points colored to differentiate the class}
-			\centering
-			\includegraphics[width=0.5\textwidth]{images/3d-scatter.jpg}
-	\end{figure}
-To better understand the nature of clusters in the dataset, an analysis using Nearest Neighbor computation is required which is done in section 3.\\
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-

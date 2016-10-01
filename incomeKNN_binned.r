@@ -23,27 +23,44 @@ recodeIncomeData = function(data, data2){
     record = as.matrix(data2.nominal[i,])
     for(j in 1:ncol(record)){
       tag = paste(attr.nominal[j], record[j])
-      if( tag %in% colnames(recoded.nominal))
-        recoded.nominal[i,tag] = 1
+      recoded.nominal[i,tag] = 1
     }
   }
-  # for(i in 1:nrow(recoded.nominal))
-  #   for(j in 1:ncol(recoded.nominal))
-  #     if(is.na(recoded.nominal[i,j]))
-  #       recoded.nominal[i,j] = 0
   return(data.frame(data2.other,recoded.nominal))
   
 }
+
 incomeScale = function(source_data, data) {
-  attr.nominal = c("workclass", "marital_status", "occupation", "relationship", "race", "gender", "native_country")
+  attr.nominal = c("workclass", "marital_status", "occupation", "relationship", "race", "gender", "native_country", "education_cat")
   attr.numeric = c("age", "capital_gain", "capital_loss", "hour_per_week")
-  attr.ordinal = c("education_cat")
+  #attr.ordinal = c()
   source_data.nominal = source_data[,attr.nominal]
   source_data.numeric = source_data[,attr.numeric]
-  source_data.ordinal = data.frame(source_data[,attr.ordinal])
+  #source_data.ordinal = data.frame(source_data[,attr.ordinal])
   data.nominal = data[, attr.nominal]
   data.numeric = data[,attr.numeric]
-  data.ordinal = data.frame(data[,attr.ordinal])
+  #data.ordinal = data.frame(data[,attr.ordinal])
+  
+  #Preprocessing Nominal Data
+  data.nominal[data.nominal$workclass != " Private"] = " Non-Private"
+  
+  data.nominal[data.nominal$marital_status == " Married-AF-spouse" || data.nominal$marital_status == " Married-civ-spouse"] = " Married"
+  data.nominal[data.nominal$marital_status != " Married-AF-spouse" && data.nominal$marital_status != " Married-civ-spouse"] = " Unmarried"
+  
+  data.nominal[data.nominal$occupation == " Exec-managerial" ||
+                 data.nominal$occupation == " Prof-specialty" ||
+                 data.nominal$occupation == " Farming-fishing"] = " High-Income-Occupation"
+  data.nominal[data.nominal$occupation != " Exec-managerial" &&
+                 data.nominal$occupation != " Prof-specialty" &&
+                 data.nominal$occupation != " Farming-fishing"] = " Low-Income-Occupation"
+  
+  data.nominal[data.nominal$native_country != " United-States"] = " Non-US"
+  
+  data.nominal[data.nominal$education_cat <= 8 || 
+                 data.nominal$education_cat >= 13] = "Favourable-Education"
+  data.nominal[data.nominal$education_cat > 8 && 
+                 data.nominal$education_cat < 13] = "Unfavourable-Education"
+  data.nominal[data.nominal$race != " White"] = " Non-White"
   
   #Normalizing Numeric Data
   means <- NULL
@@ -60,19 +77,19 @@ incomeScale = function(source_data, data) {
   }
   names(output.numeric) = attr.numeric
   #Normalizing Ordinal Data
-  means <- NULL
-  for(i in 1:ncol(source_data.ordinal)) {
-    means[i] <- mean(source_data.ordinal[,i])  
-  }
-  sdev <- NULL
-  for(i in 1:ncol(source_data.ordinal)){
-    sdev[i] <- sd(source_data.ordinal[,i])
-  }
-  output.ordinal = data.frame(matrix(ncol = ncol(data.ordinal), nrow = nrow(data.ordinal)))
-  for(j in 1:nrow(data.ordinal)){
-    output.ordinal[j,] <- (data.ordinal[j,] - means)/sdev
-  }
-  names(output.ordinal) = attr.ordinal
+  # means <- NULL
+  # for(i in 1:ncol(source_data.ordinal)) {
+  #   means[i] <- mean(source_data.ordinal[,i])  
+  # }
+  # sdev <- NULL
+  # for(i in 1:ncol(source_data.ordinal)){
+  #   sdev[i] <- sd(source_data.ordinal[,i])
+  # }
+  # output.ordinal = data.frame(matrix(ncol = ncol(data.ordinal), nrow = nrow(data.ordinal)))
+  # for(j in 1:nrow(data.ordinal)){
+  #   output.ordinal[j,] <- (data.ordinal[j,] - means)/sdev
+  # }
+  # names(output.ordinal) = attr.ordinal
   output.nominal = data.nominal
   output = data.frame(output.nominal, output.numeric, output.ordinal)
   return(output)
@@ -83,23 +100,22 @@ getIncomePrediction = function(distances, labels, k){
   for(i in 1:k){
     classWeight[labels[i]] = classWeight[labels[i]] + 1/distances[i]
   }
-  classWeight[2] = 3.27*classWeight[2]
   return(classWeight[2]/sum(classWeight))
 }
 
 generateIncomeModel = function(train_data, train_labels, test_data){
   #Creating Datasets Income_original.csv
-  attr.nominal = c("workclass", "marital_status", "occupation", "relationship", "race", "gender", "native_country")
+  attr.nominal = c("workclass", "marital_status", "occupation", "relationship", "race", "gender", "native_country", "education_cat")
   attr.numeric = c("age", "capital_gain", "capital_loss", "hour_per_week")
-  attr.ordinal = c("education_cat")
+  #attr.ordinal = c()
   for(i in 1:ncol(test_data))
     levels(test_data[,i]) = levels(train_data[,i])
   train_data.nominal = train_data[,attr.nominal]
   train_data.numeric = train_data[,attr.numeric]
-  train_data.ordinal = data.frame(train_data[,attr.ordinal])
+  #train_data.ordinal = data.frame(train_data[,attr.ordinal])
   test_data.nominal = test_data[, attr.nominal]
   test_data.numeric = test_data[,attr.numeric]
-  test_data.ordinal = data.frame(test_data[,attr.ordinal])
+  #test_data.ordinal = data.frame(test_data[,attr.ordinal])
   #Creating output dataframe
   output = array(dim = c(nrow(test_data), 2, nrow(train_data))) #test x 2 x train
   #Function for computing nominal dissimilarity
@@ -115,7 +131,7 @@ generateIncomeModel = function(train_data, train_labels, test_data){
   #Actual COmputation begins here
   n_nominal = ncol(test_data.nominal)
   n_numeric = ncol(test_data.numeric)
-  n_ordinal = ncol(test_data.ordinal)
+  n_ordinal = 0 #ncol(test_data.ordinal)
   n_total = n_nominal + n_numeric + n_ordinal
   for(i in 1:nrow(test_data)){
     print(paste("test element:",i))
@@ -125,7 +141,7 @@ generateIncomeModel = function(train_data, train_labels, test_data){
     for(j in 1:nrow(train_data)){
       distances.nominal[j] = nominalDissimilarity(train_data.nominal[j,], test_data.nominal[i,])
       distances.numeric[j] = sqrt(sum((train_data.numeric[j,] - test_data.numeric[i,])^2))
-      distances.ordinal[j] = sqrt(sum((train_data.ordinal[j,] - test_data.ordinal[i,])^2))
+     distances.ordinal[j] = 0 #sqrt(sum((train_data.ordinal[j,] - test_data.ordinal[i,])^2))
     }
     distances.total = (n_nominal*distances.nominal + n_numeric*distances.numeric + n_ordinal*distances.ordinal)/(n_total)
     distances.total.sorted = sort(distances.total, index.return = TRUE)
@@ -138,17 +154,17 @@ generateIncomeModel = function(train_data, train_labels, test_data){
 
 generateIncomeModelCosine = function(train_data, train_labels, test_data){
   #Creating Datasets Income_original.csv
-  attr.nominal = c("workclass", "marital_status", "occupation", "relationship", "race", "gender", "native_country")
+  attr.nominal = c("workclass", "marital_status", "occupation", "relationship", "race", "gender", "native_country", "education_cat")
   attr.numeric = c("age", "capital_gain", "capital_loss", "hour_per_week")
-  attr.ordinal = c("education_cat")
+  #attr.ordinal = c("education_cat")
   for(i in 1:ncol(test_data))
     levels(test_data[,i]) = levels(train_data[,i])
   train_data.nominal = train_data[,attr.nominal]
   train_data.numeric = train_data[,attr.numeric]
-  train_data.ordinal = data.frame(train_data[,attr.ordinal])
+  #train_data.ordinal = data.frame(train_data[,attr.ordinal])
   test_data.nominal = test_data[, attr.nominal]
   test_data.numeric = test_data[,attr.numeric]
-  test_data.ordinal = data.frame(test_data[,attr.ordinal])
+  #test_data.ordinal = data.frame(test_data[,attr.ordinal])
   #Creating output dataframe
   output = array(dim = c(nrow(test_data), 2, nrow(train_data))) #test x 2 x train
   #Function for computing nominal dissimilarity
@@ -164,7 +180,7 @@ generateIncomeModelCosine = function(train_data, train_labels, test_data){
   #Actual COmputation begins here
   n_nominal = ncol(test_data.nominal)
   n_numeric = ncol(test_data.numeric)
-  n_ordinal = ncol(test_data.ordinal)
+  n_ordinal = 0 #ncol(test_data.ordinal)
   n_total = n_nominal + n_numeric + n_ordinal
   for(i in 1:nrow(test_data)){
     print(paste("test element:",i))
@@ -177,7 +193,7 @@ generateIncomeModelCosine = function(train_data, train_labels, test_data){
       if(cosinediss > 1) cosinediss = 1
       if(cosinediss < -1) cosinediss = -1
       distances.numeric[j] = acos(cosinediss)
-      distances.ordinal[j] = sqrt(sum((train_data.ordinal[j,] - test_data.ordinal[i,])^2))
+      distances.ordinal[j] = 0#sqrt(sum((train_data.ordinal[j,] - test_data.ordinal[i,])^2))
     }
     distances.total = (n_nominal*distances.nominal + n_numeric*distances.numeric + n_ordinal*distances.ordinal)/(n_total)
     distances.total.sorted = sort(distances.total, index.return = TRUE)

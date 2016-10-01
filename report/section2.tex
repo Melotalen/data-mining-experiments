@@ -1,52 +1,142 @@
-\subsection{Nearest-Neighbor Calculation for Iris Dataset}
-\subsubsection{Preprocessing}
-The Iris dataset contains four attributes, each being of the ratio type. For preprocessing each attribute was normalized, i.e centered on zero and the standard deviation was reduced to 1.
-\subsubsection{Proximity Functions}
-Each record of the dataset is denoted as $A = {a_1, a_2, a_3, a_4}$.
-Two different proximity functions $P(A,B)$ were used -
-\begin{itemize}
-	\item Euclidean Distance
-		\begin{equation}
-			P(A,B) = \left(\sum_{i=1}^{4} a_i^2 + b_i^2\right)^{\frac{1}{2}}
-		\end{equation}
-	\item Cosine Distance
-		\begin{equation}
-			P(A,B) = \frac{(A\cdot B)}{\lVert A\rVert \lVert B\rVert}
-		\end{equation}			
-\end{itemize}
-\subsection{Nearest-Neighbor Calculation for Income Dataset}
+\subsection{Section II: Analysis of Performance of Classifiers}
+\subsubsection{Classifier Performance for Iris Dataset}
+	\textbf{Classifier 1}\\
+	\begin{itemize}
+		\item Preprocessing - Simple Scaling
+		\item Proximity Metric - Euclidean Distance
+		\item Voting - Inverse Distance Weighted Voting
+	\end{itemize}
+	The confusion matrix for three different values of k is given in Fig: ?
+	\begin{figure}[h]
+			\label{fig:iris_k=1}
+			\caption{Confusion Matrix k = 1 (Datset:Iris Classifier:1)}
+			\centering
+			\includegraphics[width=0.3\textwidth]{images/iris_k1.png}
+	\end{figure}
+	\begin{figure}[h]
+		\label{fig:iris_k=5}
+		\caption{Confusion Matrix k = 5 (Datset:Iris Classifier:1)}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/iris_k=5.png}
+	\end{figure}
+	\begin{figure}[h]
+		\label{fig:iris_k=10}
+		\caption{Confusion Matrix k = 10 (Datset:Iris Classifier:1)}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/iris_k=10.png}
+	\end{figure}	
+	??Analysis??\\
+	
+	\textbf{Classifier 2}\\
+	\begin{itemize}
+		\item Preprocessing - Simple Scaling (same as before)
+		\item Proximity Metric - Cosine Similarity
+		\item Voting - Inverse Distance Weighted Voting (same as before)
+	\end{itemize}
+	The confusion matrix is given in Fig: ??(use excel)
+	\begin{figure}[h]
+			\label{fig:iris_cosine_k=1}
+			\caption{Confusion Matrix k = 1 (Datset:Iris Classifier:2)}
+			\centering
+			\includegraphics[width=0.3\textwidth]{images/iris_cosine_k=1.png}
+	\end{figure}
+	\begin{figure}[h]
+		\label{fig:iris_consine_k=5}
+		\caption{Confusion Matrix k = 5 (Datset:Iris Classifier:2)}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/iris_cosine_k=5.png}
+	\end{figure}
+	\begin{figure}[h]
+		\label{fig:iris_cosine_k=10}
+		\caption{Confusion Matrix k = 10 (Datset:Iris Classifier:2)}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/iris_cosine_k=10.png}
+	\end{figure}
+	??Analysis??
 
-\subsubsection{Preprocessing}
-\begin{enumerate}
-\item The \emph{ID} attribute was dropped as it is unique for each record. The role of \emph{fnlwgt} was not discernible so it too was dropped.
-\item The Income dataset has three kinds of attributes - Nominal, Ordinal and Ratio. The dataset was split into three as the three kinds of attributes had to be treated differently.
-\item Each of the ratio attributes were normalized by centering the mean to zero and standard deviation to 1.
-\item The ordinal attributes were also normalized to mean 0 and standard deviation 1.
-\item The nominal attributes were left as they were.
-\end{enumerate}
-\subsubsection{Proximity Functions}
-For the nominal attributes a simple distance measure was used - 
-\begin{equation*}
-d^{(12)}_i = \begin{cases} 
-      0 & \textrm{ if $A_i^{(1)} = A_i^{(2)}$} \\
-      1 & \textrm{ if $A_i^{(1)} \neq A_i^{(2)}$} \\
-   \end{cases}
-\end{equation*}
-where $A^{(k)}_i$ represents the $i^{th}$ nominal attribute of the $k^{th}$ record. The total distance for between $A^{(1)}$ and $A^{(2)}$ is given by 
-\begin{equation*}
-	d^{(12)} = \sum^n_{i=1} d^{(12)}_i\\
-\end{equation*}
-where the the total number of nominal attributes is $n$. \\
-For the ratio attribute type, the distances were calculated using euclidean and cosine dissimilarity as defined in equation $(1)$ and $(2)$. And finally for the ordinal data the distance was computed by calculating the absolute difference -
-\begin{equation*}
-	d^{(12)}_i = |A_i^{(1)} - A_i^{(2)}|
-\end{equation*}
-Finally these three distances were combined by taking the weighted average based on the number of attributes in each -
-\begin{equation*}
-	d^{(12)}_{\textrm{total}} = \frac{n_{\textrm{nominal}}d^{(12)}_{\textrm{nominal}} + n_{\textrm{ordinal}}d^{(12)}_{\textrm{ordinal}} + n_{\textrm{ratio}}d^{(12)}_{\textrm{ratio}}}{n_{\textrm{nominal}} + n_{\textrm{ordinal}} + n_{\textrm{ratio}}}
-\end{equation*}
+\subsubsection{Classifier Performance for Income Dataset}
+To analyze the performance of kNN on the Income dataset two parameters need to be determined. The number of nearest neighbours $k$ and threshold for making the prediction. To optimum $k$ for the classifier would be the $k$ for which the ``Area Under the Roc Curve" is maximized. To do this, the roc graphs were computed over the test set for $k$'s ranging from 1 to 100. The Area under the curve increases as k increase. This means that the classifer is getting better at all levels. However after a while it peaks and then plateus. The $k$ at the peak can be chosen as of the best $k$'s.
 
-\subsubsection{Handling Missing Values}
-The missing values occur only for nominal attributes. The distance from such a record was taken as 1 for any record, even if the record in question too has a missing value in that place. The method of computation does not make any assumtion about the possible value of the 'Missing Value'. So two records that have a missing value for the attribute have a distance of 1 due to that attribute. And since it is missing it is definitely different from know values, the distance will be 1.\\
-
-
+\textbf{Classifier 1}\\
+	\begin{itemize}
+		\item Preprocessing - Simple Scaling
+		\item Proximity Metric - Euclidean Distance
+		\item Voting - Inverse Distance Weighted Voting
+	\end{itemize}
+	The confusion matrix is given in Fig: ??(use excel)\\
+	The ROC curve is given in Fig: ??\\
+	For this classifier the Area under ROC reaches maximum at k = 38 \\
+	\begin{figure}[h]
+		\label{fig:classifier1_auc}
+		\caption{Plot of Area Under the Roc curve for different values of k for Income Classifier 1. Maxima is achieved at k = 36}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/income_classifier1/auc.jpg}
+	\end{figure}	
+	\begin{figure}
+		\label{fig:classifier1_roc}
+		\caption{ROC curves for different values of k for Income Classifier 1}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/income_classifier1/roc.jpg}
+	\end{figure}
+	\begin{figure}
+		\label{fig:classifier1_accuracy}
+		\caption{Plot of Accuracy Vs Threshold Values for k = 38}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/income_classifier1/accuracy.jpg}
+	\end{figure}	
+	
+\textbf{Classifier 2}\\
+	\begin{itemize}
+		\item Preprocessing - Simple Scaling
+		\item Proximity Metric - Cosine Similarity
+		\item Voting - Inverse Distance Weighted Voting
+	\end{itemize}
+	The confusion matrix is given in Fig: ??(use excel)\\
+	The ROC curve is given in Fig: ??\\
+	Max for k = 36??Analysis??\\
+	\begin{figure}[h]
+		\label{fig:classifier2_auc}
+		\caption{Plot of Area Under the Roc curve for different values of k for Income Classifier 2. Maxima is achieved at k = 36}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/income_classifier2/auc.jpg}
+	\end{figure}	
+	\begin{figure}
+		\label{fig:classifier2_roc}
+		\caption{ROC curves for different values of k for Income Classifier 2}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/income_classifier2/roc.jpg}
+	\end{figure}
+	\begin{figure}
+		\label{fig:classifier2_accuracy}
+		\caption{Plot of Accuracy Vs Threshold Values for k = 36}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/income_classifier2/accuracy.jpg}
+	\end{figure}
+	
+\textbf{Classifier 3} - Best Performance\\
+	\begin{itemize}
+		\item Preprocessing - Simple Scaling with Binning
+		\item Proximity Metric - 
+		\item Voting - Inverse Distance Weighted Voting with Positive Class Priority
+	\end{itemize}
+	The confusion matrix is given in Fig: ??(use excel)\\
+	The ROC curve is given in Fig: ??\\
+	??Analysis??\\
+	\begin{figure}[h]
+		\label{fig:classifier3_auc}
+		\caption{Plot of Area Under the Roc curve for different values of k for Income Classifier 3. Accuracy keeps getting beyond hundred}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/income_classifier3/auc.jpg}
+	\end{figure}	
+	\begin{figure}
+		\label{fig:classifier1_roc}
+		\caption{ROC curves for different values of k for Income Classifier 3}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/income_classifier3/roc.jpg}
+	\end{figure}
+	\begin{figure}
+		\label{fig:classifier3_accuracy}
+		\caption{Plot of Accuracy Vs Threshold Values for k = 40}
+		\centering
+		\includegraphics[width=0.3\textwidth]{images/income_classifier3/accuracy.jpg}
+	\end{figure}

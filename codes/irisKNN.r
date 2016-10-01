@@ -1,5 +1,3 @@
-norm_vec <- function(x) sqrt(sum(x^2))
-
 irisScale = function(source_data, data) {
   data_col_names <- colnames(source_data)
   source_data <- source_data[, 1:length(data_col_names)-1]
@@ -42,9 +40,8 @@ irisKnn = function(k, train_data, train_labels, test_data, test_labels){
   for(i in 1:nrow(test_data)){
     dist.euclidean <- vector(mode = "numeric", length = nrow(train_data))
     for(j in 1:nrow(train_data)){
-      #dist.euclidean[j] = sum((train_data[j, ] - test_data[i,])^2)
-      dist.euclidean[j] = acos(sum(train_data[j, ] * test_data[i,])/norm_vec(train_data[j,])/norm_vec(test_data[i,]))
-      }
+      dist.euclidean[j] = sum((train_data[j, ] - test_data[i,])^2)
+    }
     dist.sorted = sort(dist.euclidean, index.return = TRUE)
     prediction = getIrisPrediction(dist.sorted$ix[1:k], train_labels)
     output[i,1] = i
@@ -70,15 +67,4 @@ computePerformance = function(predictions){
   }
   print(paste("Classification Rate:", correct/nrow(predictions),"   Classification Confidence:", classification_confidence/correct))
   print(paste("Misclassification Rate:", incorrect/nrow(predictions)))
-}
-
-computeConfusionMatrix = function(predictions){
-  #(i,j) = (actual, predicted)
-  confusion_mat = matrix(data = c(0,0,0,0,0,0,0,0,0), nrow = 3, ncol = 3)
-  for(i in 1:nrow(predictions)){
-    alabel = predictions$Actual_Label[i]
-    plabel = predictions$Predicted_Label[i]
-    confusion_mat[alabel, plabel] = confusion_mat[alabel, plabel] + 1
-  }
-  return(confusion_mat)
 }
