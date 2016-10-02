@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.9.25)  1 OCT 2016 18:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.9.25)  2 OCT 2016 02:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -164,44 +164,44 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
-Package: algpseudocode 
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-)
-(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
-Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
-
-Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count104
-\c@ALG@rem=\count105
-\c@ALG@nested=\count106
-\ALG@tlm=\skip47
-\ALG@thistlm=\skip48
-\c@ALG@Lnr=\count107
-\c@ALG@blocknr=\count108
-\c@ALG@storecount=\count109
-\c@ALG@tmpcounter=\count110
-\ALG@tmplength=\skip49
-)
-Document Style - pseudocode environments for use with the `algorithmicx' style
-) (/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
+(/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 
 (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count111
+\c@float@type=\count104
 \float@exts=\toks20
 \float@box=\box29
 \@float@everytoks=\toks21
 \@floatcapt=\box30
 )
-\@float@every@algorithm=\toks22
-\c@algorithm=\count112
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+\@float@every@algorithm=\toks22
+\c@algorithm=\count105
+)
+(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+
+(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count106
+\c@ALG@rem=\count107
+\c@ALG@nested=\count108
+\ALG@tlm=\skip47
+\ALG@thistlm=\skip48
+\c@ALG@Lnr=\count109
+\c@ALG@blocknr=\count110
+\c@ALG@storecount=\count111
+\c@ALG@tmpcounter=\count112
+\ALG@tmplength=\skip49
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 \col@sep=\dimen126
 \extrarowheight=\dimen127
@@ -248,21 +248,30 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 
 LaTeX Warning: Label `fig:classifier1_roc' multiply defined.
 
+
+LaTeX Warning: Label `fig:classifier2_auc' multiply defined.
+
+
+LaTeX Warning: Label `fig:classifier2_roc' multiply defined.
+
+
+LaTeX Warning: Label `fig:classifier2_accuracy' multiply defined.
+
 )
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
  (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count114
@@ -324,56 +333,55 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for U+msa on input line 33.
+LaTeX Font Info:    Try loading font information for U+msa on input line 35.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 33.
+LaTeX Font Info:    Try loading font information for U+msb on input line 35.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (./section1.tex
-Underfull \hbox (badness 10000) in paragraph at lines 9--10
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 9.
 
- []
-
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 11.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 5147) in paragraph at lines 11--24
-[]\OT1/ptm/m/n/10 To pre-dict the class of each of the test records
+Underfull \hbox (badness 10000) in paragraph at lines 30--32
+[] \OT1/ptm/b/n/10 for \OT1/ptm/m/n/10 i $\OML/cmm/m/it/10 in$ \OT1/ptm/m/n/10 
+1:k \OT1/ptm/b/n/10 do \OT1/ptm/m/n/10 weight[labels[i,j]] =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 11--24
-\OT1/ptm/m/n/10 the two func-tions were used. The first one was
+Underfull \hbox (badness 10000) in paragraph at lines 9--39
+[]\OT1/ptm/m/n/10 The pre-dic-tion of KNN al-go-rithm was bro-ken
  []
 
 
-Underfull \hbox (badness 7631) in paragraph at lines 11--24
-\OT1/ptm/m/n/10 To class-fiy a new records the \OT1/pcr/m/n/10 predictLabel(k,
+Underfull \hbox (badness 10000) in paragraph at lines 9--39
+\OT1/ptm/m/n/10 down into main func-tions. The first one was
  []
 
 
-Underfull \hbox (badness 4024) in paragraph at lines 25--26
+Underfull \hbox (badness 3601) in paragraph at lines 9--39
+ \OT1/ptm/m/n/10 To class-fiy a new records the \OT1/pcr/m/n/10 predictLabel(k,
+
+ []
+
+
+Underfull \hbox (badness 4024) in paragraph at lines 40--41
 []\OT1/ptm/m/n/10 The \OT1/pcr/m/n/10 computeDistances() \OT1/ptm/m/n/10 func-t
 ion com-putes the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 25--26
+Underfull \hbox (badness 10000) in paragraph at lines 40--41
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 27--28
-
- []
-
-) (./section2.tex
-Underfull \hbox (badness 2744) in paragraph at lines 11--12
+Underfull \hbox (badness 2744) in paragraph at lines 52--53
 []\OT1/ptm/b/n/10 Cosine Similarity-Simple Dis-sim-i-lar-ity \OT1/ptm/m/n/10 - 
 Nom-i-nal
  []
@@ -381,226 +389,177 @@ Nom-i-nal
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
-]
-Underfull \hbox (badness 10000) in paragraph at lines 27--29
-
- []
-
-<images/iris_k1.png, id=18, 332.24126pt x 185.69376pt>
-File: images/iris_k1.png Graphic file (type png)
-
-<use images/iris_k1.png>
-Package pdftex.def Info: images/iris_k1.png used on input line 38.
-(pdftex.def)             Requested size: 154.80157pt x 86.51953pt.
- <images/iris_k=5.png, id=19, 333.245pt x 186.6975pt>
+]) (./section2.tex
+<images/iris_k=5.png, id=15, 333.245pt x 186.6975pt>
 File: images/iris_k=5.png Graphic file (type png)
+ <use images/iris_k=5.png>
+Package pdftex.def Info: images/iris_k=5.png used on input line 15.
+(pdftex.def)             Requested size: 206.39685pt x 115.63445pt.
 
-<use images/iris_k=5.png>
-Package pdftex.def Info: images/iris_k=5.png used on input line 44.
-(pdftex.def)             Requested size: 154.80157pt x 86.72797pt.
- <images/iris_k=10.png, id=20, 333.245pt x 188.705pt>
-File: images/iris_k=10.png Graphic file (type png)
-
-<use images/iris_k=10.png>
-Package pdftex.def Info: images/iris_k=10.png used on input line 50.
-(pdftex.def)             Requested size: 154.80157pt x 87.66052pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--53
+Underfull \hbox (badness 10000) in paragraph at lines 10--18
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 54--56
-
- []
-
-<images/iris_cosine_k=1.png, id=21, 334.24875pt x 186.6975pt>
-File: images/iris_cosine_k=1.png Graphic file (type png)
-
-<use images/iris_cosine_k=1.png>
-Package pdftex.def Info: images/iris_cosine_k=1.png used on input line 65.
-(pdftex.def)             Requested size: 154.80157pt x 86.46873pt.
-
-<images/iris_cosine_k=5.png, id=22, 333.245pt x 184.69pt>
+<images/iris_cosine_k=5.png, id=16, 333.245pt x 184.69pt>
 File: images/iris_cosine_k=5.png Graphic file (type png)
 
 <use images/iris_cosine_k=5.png>
-Package pdftex.def Info: images/iris_cosine_k=5.png used on input line 71.
-(pdftex.def)             Requested size: 154.80157pt x 85.79541pt.
+Package pdftex.def Info: images/iris_cosine_k=5.png used on input line 30.
+(pdftex.def)             Requested size: 206.39685pt x 114.39105pt.
 
-<images/iris_cosine_k=10.png, id=23, 333.245pt x 186.6975pt>
-File: images/iris_cosine_k=10.png Graphic file (type png)
-
-<use images/iris_cosine_k=10.png>
-Package pdftex.def Info: images/iris_cosine_k=10.png used on input line 77.
-(pdftex.def)             Requested size: 154.80157pt x 86.72797pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 84--86
+Underfull \hbox (badness 10000) in paragraph at lines 25--33
 
  []
 
-<images/income_classifier1/auc.jpg, id=24, 501.875pt x 501.875pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<images/income_classifier1/auc.jpg, id=17, 501.875pt x 501.875pt>
 File: images/income_classifier1/auc.jpg Graphic file (type jpg)
 
 <use images/income_classifier1/auc.jpg>
-Package pdftex.def Info: images/income_classifier1/auc.jpg used on input line 9
-7.
+Package pdftex.def Info: images/income_classifier1/auc.jpg used on input line 5
+0.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
 
-<images/income_classifier1/roc.jpg, id=25, 501.875pt x 501.875pt>
+<images/income_classifier1/roc.jpg, id=18, 501.875pt x 501.875pt>
 File: images/income_classifier1/roc.jpg Graphic file (type jpg)
 
 <use images/income_classifier1/roc.jpg>
-Package pdftex.def Info: images/income_classifier1/roc.jpg used on input line 1
-03.
+Package pdftex.def Info: images/income_classifier1/roc.jpg used on input line 5
+6.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
 
-<images/income_classifier1/accuracy.jpg, id=26, 501.875pt x 501.875pt>
+<images/income_classifier1/accuracy.jpg, id=19, 501.875pt x 501.875pt>
 File: images/income_classifier1/accuracy.jpg Graphic file (type jpg)
 
 <use images/income_classifier1/accuracy.jpg>
 Package pdftex.def Info: images/income_classifier1/accuracy.jpg used on input l
-ine 109.
+ine 62.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 112--114
-
- []
-
-<images/income_classifier2/auc.jpg, id=27, 501.875pt x 501.875pt>
+<images/income_classifier2/auc.jpg, id=20, 501.875pt x 501.875pt>
 File: images/income_classifier2/auc.jpg Graphic file (type jpg)
 
 <use images/income_classifier2/auc.jpg>
-Package pdftex.def Info: images/income_classifier2/auc.jpg used on input line 1
-25.
+Package pdftex.def Info: images/income_classifier2/auc.jpg used on input line 7
+6.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
 
-<images/income_classifier2/roc.jpg, id=28, 501.875pt x 501.875pt>
+<images/income_classifier2/roc.jpg, id=21, 501.875pt x 501.875pt>
 File: images/income_classifier2/roc.jpg Graphic file (type jpg)
 
 <use images/income_classifier2/roc.jpg>
-Package pdftex.def Info: images/income_classifier2/roc.jpg used on input line 1
-31.
+Package pdftex.def Info: images/income_classifier2/roc.jpg used on input line 8
+2.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
 
-<images/income_classifier2/accuracy.jpg, id=29, 501.875pt x 501.875pt>
+<images/income_classifier2/accuracy.jpg, id=22, 501.875pt x 501.875pt>
 File: images/income_classifier2/accuracy.jpg Graphic file (type jpg)
 
 <use images/income_classifier2/accuracy.jpg>
 Package pdftex.def Info: images/income_classifier2/accuracy.jpg used on input l
-ine 137.
+ine 88.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
-
+ [2 <./images/iris_k=5.png> <./images/iris_cosine_k=5.png>]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 140--142
-
- []
-
-<images/income_classifier3/auc.jpg, id=30, 501.875pt x 501.875pt>
+<images/income_classifier3/auc.jpg, id=29, 501.875pt x 501.875pt>
 File: images/income_classifier3/auc.jpg Graphic file (type jpg)
 
 <use images/income_classifier3/auc.jpg>
 Package pdftex.def Info: images/income_classifier3/auc.jpg used on input line 1
-53.
+03.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
 
-<images/income_classifier3/roc.jpg, id=31, 501.875pt x 501.875pt>
+<images/income_classifier3/roc.jpg, id=30, 501.875pt x 501.875pt>
 File: images/income_classifier3/roc.jpg Graphic file (type jpg)
 
 <use images/income_classifier3/roc.jpg>
 Package pdftex.def Info: images/income_classifier3/roc.jpg used on input line 1
-59.
+09.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
 
-<images/income_classifier3/accuracy.jpg, id=32, 501.875pt x 501.875pt>
+<images/income_classifier3/accuracy.jpg, id=31, 501.875pt x 501.875pt>
 File: images/income_classifier3/accuracy.jpg Graphic file (type jpg)
 
 <use images/income_classifier3/accuracy.jpg>
 Package pdftex.def Info: images/income_classifier3/accuracy.jpg used on input l
-ine 165.
+ine 115.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
-) [2 <./images/iris_k1.png> <./images/iris_k=5.png> <./images/iris_k=10.png> <.
-/images/iris_cosine_k=1.png> <./images/iris_cosine_k=5.png>]
+ [3 <./images/income_classifier1/auc.jpg> <./images/income_classifier1/roc.jpg>
+ <./images/income_classifier1/accuracy.jpg> <./images/income_classifier2/auc.jp
+g> <./images/income_classifier2/roc.jpg> <./images/income_classifier2/accuracy.
+jpg>]
+<images/prf.jpg, id=35, 501.875pt x 501.875pt>
+File: images/prf.jpg Graphic file (type jpg)
+ <use images/prf.jpg>
+Package pdftex.def Info: images/prf.jpg used on input line 124.
+(pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
+)
+(./section3.tex
+Underfull \hbox (badness 10000) in paragraph at lines 7--8
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+ []
 
-(./section3.tex <images/native-knn/auc.jpg, id=37, 501.875pt x 501.875pt>
+<images/native-knn/auc.jpg, id=36, 501.875pt x 501.875pt>
 File: images/native-knn/auc.jpg Graphic file (type jpg)
 
 <use images/native-knn/auc.jpg>
-Package pdftex.def Info: images/native-knn/auc.jpg used on input line 6.
+Package pdftex.def Info: images/native-knn/auc.jpg used on input line 13.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<images/native-knn/roc.jpg, id=38, 501.875pt x 501.875pt>
+<images/native-knn/roc.jpg, id=37, 501.875pt x 501.875pt>
 File: images/native-knn/roc.jpg Graphic file (type jpg)
 
 <use images/native-knn/roc.jpg>
-Package pdftex.def Info: images/native-knn/roc.jpg used on input line 12.
+Package pdftex.def Info: images/native-knn/roc.jpg used on input line 19.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
 
-<images/native-knn/accuracy.jpg, id=39, 501.875pt x 501.875pt>
+<images/native-knn/accuracy.jpg, id=38, 501.875pt x 501.875pt>
 File: images/native-knn/accuracy.jpg Graphic file (type jpg)
 
 <use images/native-knn/accuracy.jpg>
-Package pdftex.def Info: images/native-knn/accuracy.jpg used on input line 18.
+Package pdftex.def Info: images/native-knn/accuracy.jpg used on input line 25.
 (pdftex.def)             Requested size: 154.80157pt x 154.79852pt.
-) [3 <./images/iris_cosine_k=10.png> <./images/income_classifier1/auc.jpg> <./i
-mages/income_classifier1/roc.jpg> <./images/income_classifier1/accuracy.jpg> <.
-/images/income_classifier2/auc.jpg> <./images/income_classifier2/roc.jpg>] [4 <
-./images/income_classifier2/accuracy.jpg> <./images/income_classifier3/auc.jpg>
- <./images/income_classifier3/roc.jpg> <./images/income_classifier3/accuracy.jp
-g> <./images/native-knn/auc.jpg> <./images/native-knn/roc.jpg>] [5
+) [4 <./images/income_classifier3/auc.jpg> <./images/income_classifier3/roc.jpg
+> <./images/income_classifier3/accuracy.jpg> <./images/prf.jpg> <./images/nativ
+e-knn/auc.jpg>] [5
 
- <./images/native-knn/accuracy.jpg>] (./report.aux)
+ <./images/native-knn/roc.jpg> <./images/native-knn/accuracy.jpg>] (./report.au
+x)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 4015 strings out of 493029
- 59450 string characters out of 6136234
- 125776 words of memory out of 5000000
- 7467 multiletter control sequences out of 15000+600000
+ 4005 strings out of 493029
+ 59098 string characters out of 6136234
+ 126717 words of memory out of 5000000
+ 7460 multiletter control sequences out of 15000+600000
  35232 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,8n,26p,623b,238s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,8n,26p,771b,242s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
-rw/times/utmri8a.pfb>
-Output written on report.pdf (5 pages, 412815 bytes).
+/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/urw/times/utmri8a.pfb>
+Output written on report.pdf (5 pages, 400654 bytes).
 PDF statistics:
- 91 PDF objects out of 1000 (max. 8388607)
- 52 compressed objects within 1 object stream
+ 84 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 91 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 76 words of extra memory for PDF output out of 10000 (max. 10000000)
 

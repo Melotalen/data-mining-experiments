@@ -5,12 +5,46 @@ The kNN classifier was applied to the two datasets - Iris and Income. More detai
 \item \textbf{Iris Dataset} - The Iris Dataset has four attributes. Each attribute is numeric. It has 150 records, distributed equally among 3 classes - \emph{Setosa, Versicolor and Virginia}.
 \item \textbf{Income Dataset} - The Income Dataset has 15 attributes, which are a mix of nominal, numeric and ordinal data. There are a total of 520 records in the training set and 288 in the test set. There are only two classes. The ratio between the classes is approximately $1:3$ with the negative class being larger in number.
 \end{itemize}
-\subsection{Details of KNN Algorithm}
+\subsection{KNN Algorithm}
+The prediction of KNN algorithm was broken down into main functions. The first one was \texttt{computeDistances(train\_data, test\_data)} and the second one was \texttt{predictLabel(k, distances)}.
+\begin{algorithm}
+	\begin{algorithmic}
+	\Procedure{computeDistances}{$train\_data, test\_data$}
+		\For{i in test\_data }
+			\State distance[] = zeros()
+			\For{j in train\_data}
+				\State distance[j] $\gets$ computeDistance(r,s)
+			\EndFor
+			\State distances[i,j] $\gets$ sort(distance, order = increasing)
+		  \State labels[i,j] $\gets$ getLabels(distance) \Comment{\emph{Gives the training data labels of the classes sorted according to distance from test record}}
+		  \State \textbf{return} distances, labels
+		\EndFor
+	\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}
+	\begin{algorithmic}
+	\Procedure{predictLabel}{$k, distances, labels$}
+		\State weight[] = {0,0}
+		\For{i $in$ 1:nrow(distances)}
+			\For{i $in$ 1:k}
+				weight[labels[i,j]] = weight[labels[i,j]] + 1/distances[i,j]
+			\EndFor
+			\State	prob[i] = weight[2]/sum(weights)
+		\EndFor
+	\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+To classfiy a new records the \texttt{predictLabel(k, distances)}
+
+The \texttt{computeDistances()} function computes the distance of each of the test record from each of the training data record. The distances are sorted and stored for use by \texttt{predictLabel(k, distances)}. \texttt{predictLabel(k, distances)} takes the number of nearest neighbors (k) as a parameter and predicts the label. The detailed defintions of the functions are given in fig. ?? and fig. ??. \\
+
+The reason for separating out the distance computation was the predictions were to be made for different values of $k$. Distance computation takes $O(mn\log n)$ time, where m is the number of records in test dataset, n is the number of records in training dataset. While prediction takes only $O(mk)$ time, which is considereably less than $O(mn\log n)$.\\
 To classify the test records, the KNN algorithm was used. A number of variations were tried in each of the algorithms. This section explains each of the variations and discusses the pros and cons of each.
 \subsubsection{Variation in Preprocessing}
  \begin{itemize}
  	\item \textbf{Simple Scaling} - The nominal attributes are not touched. Numeric and ordinal attributes are scaled and centered. The resultant standard deviation was 1 and mean was 0.
- 	\item \text{Simple Scaling with Binning} - Apart from scaling and centering the numeric and ordinal attributes the nominal attriutes were also modified. Many of the nominal attributes were very skewed. For e.g - In \emph{Native Country} in Income dataset, out of 26 categories, 12 categories had only one record each. In such cases the smalled categories were grouped together. Also \emph{Education_cat} was converted to nominal type by grouping a few educational levels what had very few records.
+ 	\item \text{Simple Scaling with Binning} - Apart from scaling and centering the numeric and ordinal attributes the nominal attriutes were also modified. Many of the nominal attributes were very skewed. For e.g - In \emph{Native Country} in Income dataset, out of 26 categories, 12 categories had only one record each. In such cases the smalled categories were grouped together. Also \emph{Education\_cat} was converted to nominal type by grouping a few educational levels what had very few records.
  \end{itemize}
  \subsubsection{Variations in Proximity Metric}
  \begin{itemize}
@@ -23,30 +57,4 @@ To classify the test records, the KNN algorithm was used. A number of variations
 \begin{equation*}
 	P(class = i) = \frac{\sum_{r \in N^(i)} \frac{1}{distance(r)}}{\sum_{r \in N} \frac{1}{distance(r)}}
 \end{equation*}
-Finally, the class was assigned based on a threhold that can be set to get the target tru positive rate or false psoitive rate.
-
-To predict the class of each of the test records the two functions were used. The first one was \texttt{computeDistances(train\_data, test\_data)} and the second one was \texttt{predictLabel(k, distances)}. 
-\begin{algorithm}
-	\begin{algorithmic}
-	\For{i in test\_data }
-		\For{j in train\_data}
-			\State distance[i,j] $\gets$ computeDistance(r,s)
-		\EndFor
-		distances[i,j] $\gets$ sort(distance[i,], order = increasing)
-		predictLabel(k, distances[i, 1:k]	
-	\EndFor	
-	\end{algorithmic}
-\end{algorithm}
-To classfiy a new records the \texttt{predictLabel(k, distances)}
-
-The \texttt{computeDistances()} function computes the distance of each of the test record from each of the training data record. The distances are sorted and stored for use by \texttt{predictLabel(k, distances)}. \texttt{predictLabel(k, distances)} takes the number of nearest neighbors (k) as a parameter and predicts the label. The detailed defintions of the functions are given in fig.1 and fig.2. \\
-
-The reason for separating out the distance computation was the predictions were to be made for different values of $k$. Distance computation takes $O(mn\log n)$ time, where m is the number of records in test dataset, n is the number of records in training dataset. While prediction takes only $O(mk)$ time, which is considereably less than $O(mn\log n)$.\\
-
-\subsection{KNN on Income Dataset}
-The Income dataset has 15 attributes. Based on the analysis during the previous assignment the three of the attributes were dropped and the remaining were split into three groups by the data type they contained - Nominal, Ordinal and Numeric.\\
-The data was preprocessed into two differernt ways. The first way was the same as in the previous assignment, however the results were not satisfactory so they were preprocessed again.
-The preprocessing was done as follows
-\begin{itemize}
-\item Nominal - 
-\end{itemize}
+Finally, the class was assigned based on a threhold that can be set to get the target true positive rate or false psoitive rate.
